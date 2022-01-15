@@ -1,28 +1,45 @@
 
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import InputSlider from '../input-slider/input-slider';
 import RadioButtons from '../radio-buttons/radio-buttons';
 import MonthlyPayment from '../monthly-payment/monthly-payment';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import { changePurchasePrice } from '../../redux/calculatorSlice';
-import { numberWithCommas } from '../../util';
+import { changePurchasePrice, changeInterestRate, getMonthlyPayment } from '../../redux/calculatorSlice';
+import { convertIntWithCommas, isFloatNumber } from '../../util';
 import styles from './MainContent.module.scss';
 
+enum CalculationValueType {
+  PurchasePrice = 'PurchasePrice',
+  InterestRate = 'InterestRate'
+}
+
 const MainContent = (): JSX.Element => {
-
   const calculatorStates = useAppSelector((state) => state.calculator);
-  const { purchasePrice, interestRate, period} = calculatorStates;
+  const { purchasePrice, interestRate, period } = calculatorStates;
   const dispatch = useAppDispatch();
-
-  console.log(calculatorStates);
 
   const handleChange = (
     event: Event,
-    newValue: number| number[],
+    newValue: number | number[],
+    calculationType: CalculationValueType
   ) => {
-    console.log(newValue);
-    dispatch(changePurchasePrice(newValue));
+    switch(calculationType) {
+      case (CalculationValueType.PurchasePrice):
+        dispatch(changePurchasePrice(newValue));
+        break;
+      case (CalculationValueType.InterestRate):
+        dispatch(changeInterestRate(newValue));
+        break;
+    }
   }
+
+  useEffect(() => {
+    dispatch(getMonthlyPayment({
+      principal: purchasePrice,
+      interest: interestRate,
+      term: period
+    }))
+  }, [purchasePrice, interestRate, period]);
 
   return (
     <main className={styles.container}>
@@ -36,11 +53,11 @@ const MainContent = (): JSX.Element => {
             <InputSlider
               value={purchasePrice}
               topLabel="Purchase Price"
-              valueLabel={<><span>$</span>{numberWithCommas(purchasePrice)}</>}
+              valueLabel={<><span>$</span>{convertIntWithCommas(purchasePrice)}</>}
               min={50000}
               max={2500000}
               step={10000}
-              onChange={handleChange}
+              onChange={(event, newValue) => handleChange(event, newValue, CalculationValueType.PurchasePrice)}
               minLabel="$50K"
               maxLabel="$2.5M"
             />
@@ -49,11 +66,11 @@ const MainContent = (): JSX.Element => {
             <InputSlider
               value={interestRate}
               topLabel="Interest Rate"
-              valueLabel={<><span>%</span>{interestRate}</>}
+              valueLabel={<><span>%</span>{isFloatNumber(interestRate) ? interestRate : `${interestRate}.0`}</>}
               min={0}
               max={25}
               step={0.5}
-              onChange={() => {}}
+              onChange={(event, newValue) => handleChange(event, newValue, CalculationValueType.InterestRate)}
               minLabel="0"
               maxLabel="25%"
             />

@@ -3,8 +3,6 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Header from '../components/header/header';
 import MainContent from '../components/main-content/main-content';
-import { Provider } from 'react-redux';
-import store from '../redux/store';
 
 const Home: NextPage = () => {
   // const submitPost = async () => {
@@ -28,10 +26,8 @@ const Home: NextPage = () => {
       <Head>
         <title>Produce8 - Mortgage Calculator</title>
       </Head>
-      <Provider store={store}>
-        <Header />
-        <MainContent />
-      </Provider>
+      <Header />
+      <MainContent />
     </>
   )
 }

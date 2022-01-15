@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { Slider } from '@mui/material';
-import { withStyles } from '@material-ui/core/styles';
 import styles from './InputSlider.module.scss';
 
 type SliderProps = {
@@ -14,26 +13,6 @@ type SliderProps = {
   step: number;
   onChange: (event: Event, newValue: number | number[]) => void;
 }
-
-const CustomSlider = withStyles({
-  root: {
-    padding: '5px 0'
-  },
-  track: {
-    height: 2,
-  },
-  rail: {
-    height: 2,
-    opacity: 1,
-    backgroundColor: '#d7dce8',
-  },
-  thumb: {
-    width: 14,
-    height: 14,
-    background: '#ffffff',
-    border: 'solid 2px #256ed6'
-  }
-})(Slider);
 
 const InputSlider: React.FunctionComponent<SliderProps> = ({
   value,
@@ -51,13 +30,21 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
       <div>
         {topLabel && (<span >{topLabel}</span>)}
         {valueLabel && (<div className={styles["value-label"]}>{valueLabel}</div>)}
-        <CustomSlider
+        <Slider
           value={value}
           onChange={onChange}
-          aria-labelledby="slider"
           min={min}
           max={max}
           step={step}
+          aria-label="pretto slider"
+          sx={{
+            color: '#3577da',
+            '& .MuiSlider-thumb': {
+              background: "#fff",
+              border: "solid 2px #3577da"
+            }
+          }}
+
         />
         <div className={styles["min-max-labels"]}>
           {(minLabel || maxLabel) && (
