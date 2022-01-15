@@ -44,7 +44,7 @@ const MainContent = (): JSX.Element => {
     }));
   
     return () => {
-      promise.abort()
+      promise.abort();
     }
   }, [purchasePrice, interestRate, period]);
 

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit';
 
 type CalculationValues = {
   principal: number,
@@ -6,9 +6,18 @@ type CalculationValues = {
   term: number
 }
 
+type InitialState = {
+  purchasePrice: number,
+  interestRate: number,
+  period: number,
+  monthlyPayment: string,
+  loading: "idle" | "pending",
+  error: boolean,
+}
+
 export const getMonthlyPayment = createAsyncThunk(
   'users/getMonthlyPayment',
-  async (values:CalculationValues): Promise<{monthlyPayment: string}> => {
+  async (values:CalculationValues): Promise<{monthlyPayment?: string, error?: string}> => {
     const response = await fetch(`/api/mortgageCalculation?principal=${values.principal}&annualInterestRate=${values.interest}&termOfLoan=${values.term}`, {
       method: 'POST',
         headers: {
@@ -19,15 +28,18 @@ export const getMonthlyPayment = createAsyncThunk(
   }
 )
 
+const initialState: InitialState = {
+  purchasePrice: 50000,
+  interestRate: 2.5,
+  period: 20,
+  monthlyPayment: "",
+  loading: 'idle',
+  error: false,
+};
+
 export const calculatorSlice = createSlice({
   name: 'calculator',
-  initialState: {
-    loading: true,
-    purchasePrice: 50000,
-    interestRate: 2.5,
-    period: 20,
-    monthlyPayment: ""
-  },
+  initialState,
   reducers: {
     changePurchasePrice: (state, action) => {
       state.purchasePrice = action.payload;
@@ -42,10 +54,29 @@ export const calculatorSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getMonthlyPayment.fulfilled, (state, action) => {
-        console.log(action.payload.monthlyPayment, 'action.payload')
-        state.monthlyPayment = action.payload.monthlyPayment
+        if (action.payload.error) {
+          state.error = true;
+          return;
+        }
+        if (
+          state.loading === 'pending' && action.payload.monthlyPayment
+        ) {
+          if (state.error) {
+            state.error = false;
+          }
+          state.loading = 'idle'
+          state.monthlyPayment = action.payload.monthlyPayment
+        }
       })
-        
+      .addCase(getMonthlyPayment.pending, (state) => {
+        if (state.error) {
+          state.error = false;
+        }
+
+        if (state.loading === 'idle') {
+          state.loading = 'pending'
+        }
+      })
   }
 });
 
