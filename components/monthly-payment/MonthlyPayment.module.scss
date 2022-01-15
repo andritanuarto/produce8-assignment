@@ -1,0 +1,41 @@
+@import '/styles/variables';
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 35px;
+  background: $white;
+  border-radius: 30px;
+  width: 330px;
+  height: 280px;
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    color: $light-grey;
+    &:nth-child(3) {
+      padding-bottom: 35px;
+    }
+  }
+  strong {
+    font-size: 60px;
+    font-weight: 900;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+  button {
+    position: absolute;
+    cursor: pointer;
+    font-size: 16px;
+    background: $purple;
+    color: $white;
+    border: solid 1px;
+    padding: 0 20px;
+    height: 50px;
+    border-radius: 30px;
+    bottom: -25px;
+  }
+}

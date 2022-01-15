@@ -1,0 +1,64 @@
+@import '/styles/variables';
+
+$breaking-point: 768px;
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-slider-container {
+  margin-bottom: 40px;
+}
+
+.heading {
+  width: 100%;
+  max-width: 990px;
+  margin-top: 50px;
+  padding: 0 24px;
+  h1 {
+    margin-bottom: 10px;
+  }
+  span {
+    color: $light-grey;
+  }
+}
+
+.main-article {
+  margin-top: 50px;
+  display: flex;
+  width: 100%;
+  max-width: 990px;
+  padding: 0 24px;
+  @media (max-width: $breaking-point) {
+    flex-direction: column;
+  }
+
+  section {
+    &:first-child {
+      padding-right: 50px;
+    }
+    &:last-child {
+      padding-left: 50px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    width: 50%;
+    @media (max-width: $breaking-point) {
+      padding: 0;
+      width: 100%;
+      &:first-child {
+        padding-right: 0;
+      }
+      &:last-child {
+        margin: 50px 0;
+        padding: 0;
+        justify-content: flex-start;
+        & > div {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+  align-items: center;
+  -webkit-box-shadow: 0px 5px 28px 4px rgb(203 223 255);
+  box-shadow: 0px 5px 28px 4px rgb(203 223 255);
+  @media (max-width: 1050px) {
+    padding: 0 24px;
+  }
+}
+
+.menu {
+  cursor: pointer;
+  transition: opacity 0.5;
+  &:hover {
+    opacity: 0.7;
+  }
+}
