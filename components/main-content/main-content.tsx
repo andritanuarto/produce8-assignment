@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useCallback, memo } from 'react';
 import InputSlider from '../input-slider/input-slider';
 import RadioButtons from '../radio-buttons/radio-buttons';
 import MonthlyPayment from '../monthly-payment/monthly-payment';
@@ -19,7 +19,7 @@ const MainContent = (): JSX.Element => {
   const { purchasePrice, interestRate, period } = calculatorStates;
   const dispatch = useAppDispatch();
 
-  const handleChange = (
+  const handleChange = useCallback((
     newValue: number | number[] | string,
     calculationType: CalculationValueType
   ) => {
@@ -33,7 +33,7 @@ const MainContent = (): JSX.Element => {
       case (CalculationValueType.TermPeriod):
         dispatch(changePeriod(newValue));
     }
-  }
+  }, [dispatch]);
 
   useEffect(() => {
     // Dispatching the thunk returns a promise
@@ -66,6 +66,7 @@ const MainContent = (): JSX.Element => {
               min={50000}
               max={2500000}
               step={10000}
+              ariaLabel="purchase price"
               onChange={(event, newValue) => handleChange(newValue, CalculationValueType.PurchasePrice)}
               minLabel="$50K"
               maxLabel="$2.5M"
@@ -81,6 +82,7 @@ const MainContent = (): JSX.Element => {
               min={0}
               max={25}
               step={0.5}
+              ariaLabel="interest rate"
               onChange={(event, newValue) => handleChange(newValue, CalculationValueType.InterestRate)}
               minLabel="0"
               maxLabel="25%"
@@ -88,7 +90,7 @@ const MainContent = (): JSX.Element => {
           </div>
           <RadioButtons 
             onChange={(newValue) => handleChange(newValue, CalculationValueType.TermPeriod)}
-            ariaLabel="period"
+            ariaLabel="mortgage period"
             defaultValue={period}
             radioGroupName="period-radio-buttons"
             buttons={[
@@ -115,4 +117,4 @@ const MainContent = (): JSX.Element => {
   );
 };
 
-export default MainContent;
+export default memo(MainContent);

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode, memo } from 'react';
 import { Slider } from '@mui/material';
 import styles from './InputSlider.module.scss';
 
@@ -11,6 +11,7 @@ type SliderProps = {
   minLabel?: string | number;
   maxLabel?: string | number;
   step: number;
+  ariaLabel?: string;
   onChange: (event: Event, newValue: number | number[]) => void;
 }
 
@@ -23,40 +24,39 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
   minLabel,
   maxLabel,
   step = 1,
-  onChange
+  onChange,
+  ariaLabel
 }): JSX.Element => {
   return (
-    <React.Fragment>
-      <div>
-        {topLabel && (<label className={styles["top-label"]}>{topLabel}</label>)}
-        {valueLabel && (<div className={styles["value-label"]}>{valueLabel}</div>)}
-        <Slider
-          value={value}
-          onChange={onChange}
-          min={min}
-          max={max}
-          step={step}
-          aria-label="pretto slider"
-          sx={{
-            color: '#3577da',
-            '& .MuiSlider-thumb': {
-              background: "#fff",
-              border: "solid 2px #3577da"
-            }
-          }}
+    <div>
+      {topLabel && (<label className={styles["top-label"]}>{topLabel}</label>)}
+      {valueLabel && (<div className={styles["value-label"]}>{valueLabel}</div>)}
+      <Slider
+        value={value}
+        onChange={onChange}
+        min={min}
+        max={max}
+        step={step}
+        aria-label={ariaLabel}
+        sx={{
+          color: '#3577da',
+          '& .MuiSlider-thumb': {
+            background: "#fff",
+            border: "solid 2px #3577da"
+          }
+        }}
 
-        />
-        <div className={styles["min-max-labels"]}>
-          {(minLabel || maxLabel) && (
-            <>
-              <span>{minLabel}</span>
-              <span>{maxLabel}</span>
-            </>
-          )}
-        </div>
+      />
+      <div className={styles["min-max-labels"]}>
+        {(minLabel || maxLabel) && (
+          <>
+            <span>{minLabel}</span>
+            <span>{maxLabel}</span>
+          </>
+        )}
       </div>
-    </React.Fragment>
+    </div>
   );
 }
 
-export default InputSlider;
+export default memo(InputSlider);

@@ -3,7 +3,6 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import { purple, grey} from '@mui/material/colors';
 import styles from './RadioButtons.module.scss';
 
@@ -34,7 +33,7 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
 
   return (
     <FormControl component="fieldset">
-      <FormLabel>Period</FormLabel>
+      <label className={styles["top-label"]}>Period</label>
       <RadioGroup
         aria-label={ariaLabel}
         value={defaultValue}

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 type CalculationValues = {
   principal: number,
