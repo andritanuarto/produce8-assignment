@@ -1,4 +1,4 @@
-import { ReactNode, memo } from 'react';
+import React, { ReactNode, memo } from 'react';
 import { Slider } from '@mui/material';
 import styles from './InputSlider.module.scss';
 
@@ -29,8 +29,8 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
 }): JSX.Element => {
   return (
     <div>
-      {topLabel && (<label className={styles["top-label"]}>{topLabel}</label>)}
-      {valueLabel && (<div className={styles["value-label"]}>{valueLabel}</div>)}
+      {topLabel && (<label className={styles['top-label']}>{topLabel}</label>)}
+      {valueLabel && (<div className={styles['value-label']}>{valueLabel}</div>)}
       <Slider
         value={value}
         onChange={onChange}
@@ -41,13 +41,12 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
         sx={{
           color: '#3577da',
           '& .MuiSlider-thumb': {
-            background: "#fff",
-            border: "solid 2px #3577da"
+            background: '#fff',
+            border: 'solid 2px #3577da'
           }
         }}
-
       />
-      <div className={styles["min-max-labels"]}>
+      <div className={styles['min-max-labels']}>
         {(minLabel || maxLabel) && (
           <>
             <span>{minLabel}</span>
@@ -57,6 +56,6 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
       </div>
     </div>
   );
-}
+};
 
 export default memo(InputSlider);

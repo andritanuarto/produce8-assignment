@@ -1,5 +1,5 @@
 
-import { useEffect, useCallback, memo } from 'react';
+import React, { useEffect, useCallback, memo } from 'react';
 import InputSlider from '../input-slider/input-slider';
 import RadioButtons from '../radio-buttons/radio-buttons';
 import MonthlyPayment from '../monthly-payment/monthly-payment';
@@ -45,7 +45,7 @@ const MainContent = (): JSX.Element => {
   
     return () => {
       promise.abort();
-    }
+    };
   }, [purchasePrice, interestRate, period, dispatch]);
 
   return (
@@ -54,9 +54,9 @@ const MainContent = (): JSX.Element => {
         <h1>Get started with Digital Credit Experience</h1>
         <span>Qualify or apply your mortgage in minutes</span>
       </article>
-      <article className={styles["main-article"]}>
+      <article className={styles['main-article']}>
         <section>
-          <div className={styles["input-slider-container"]}>
+          <div className={styles['input-slider-container']}>
             <InputSlider
               value={purchasePrice}
               topLabel="Purchase Price"
@@ -72,7 +72,7 @@ const MainContent = (): JSX.Element => {
               maxLabel="$2.5M"
             />
           </div>
-          <div className={styles["input-slider-container"]}>
+          <div className={styles['input-slider-container']}>
             <InputSlider
               value={interestRate}
               topLabel="Interest Rate"
@@ -93,6 +93,7 @@ const MainContent = (): JSX.Element => {
             ariaLabel="mortgage period"
             defaultValue={period}
             radioGroupName="period-radio-buttons"
+            topLabel="Period"
             buttons={[
               {
                 value: 20,

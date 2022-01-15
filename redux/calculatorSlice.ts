@@ -12,7 +12,7 @@ type InitialState = {
   period: number,
   monthlyPayment: string,
   loading: boolean,
-  error: any,
+  error: {error?: string} | null,
 };
 
 export const getMonthlyPayment = createAsyncThunk(
@@ -28,14 +28,14 @@ export const getMonthlyPayment = createAsyncThunk(
 
     return response.json();
   }
-)
+);
 
 const initialState: InitialState = {
   purchasePrice: 50000,
   interestRate: 2.5,
   period: 20,
-  monthlyPayment: "",
-  loading: false,
+  monthlyPayment: '',
+  loading: true,
   error: null,
 };
 
@@ -57,17 +57,17 @@ export const calculatorSlice = createSlice({
     builder
       .addCase(getMonthlyPayment.fulfilled, (state, action) => {
         if (action.payload.error) {
-          state.error = action.payload.error;
+          state.error = action.payload.error as {error?: string};
           return;
         }
-        if (
-          state.loading === true && action.payload.monthlyPayment
-        ) {
+        if (action.payload.monthlyPayment) {
           if (state.error) {
             state.error = null;
           }
-          state.loading = false
-          state.monthlyPayment = action.payload.monthlyPayment
+          if (state.loading) {
+            state.loading = false;
+          }
+          state.monthlyPayment = action.payload.monthlyPayment;
         }
       })
       .addCase(getMonthlyPayment.pending, (state) => {
@@ -75,12 +75,12 @@ export const calculatorSlice = createSlice({
           state.error = null;
         }
 
-        if (state.loading === false) {
-          state.loading = true
+        if (!state.loading ) {
+          state.loading = true;
         }
-      })
+      });
   }
 });
 
-export const { changePurchasePrice, changeInterestRate, changePeriod } = calculatorSlice.actions
-export default calculatorSlice.reducer
+export const { changePurchasePrice, changeInterestRate, changePeriod } = calculatorSlice.actions;
+export default calculatorSlice.reducer;

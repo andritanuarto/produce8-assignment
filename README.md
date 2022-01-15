@@ -1,41 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+`yarn dev` - to run development
+Open (http://localhost:3000) with your browser to see the page.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## What happens if the server error?
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The error is handled in `calculatorSlice.ts` in the `extraReducers` function.
 
-## Your Task
+When the error happens it will change the default error state to true.
 
-Your task can be found here:
-[CodeExercise.pdf](https://github.com/Produce8/P8FrontendAssignment/files/7866197/CodeExercise.pdf)
+To test the error, try to change the interest rate to 0 or 0.5. It will show error
+message below on the monthly payment section.
+`There was a problem calculating your mortgage. Please check your inputs`
 
-## The Mortgage API
+## What happens while waiting the error?
 
-There is an API route available at /mortgageCalculation which will take the following query parameters:
+The loading request is handled in `getMonthlyPayment.pending` and `getMonthlyPayment.fulfilled` in `calculatorSlice.ts`.
+by changing the loading state.
 
-```
-principal: [number]
-annualInterestRate: [number]
-termOfLoan: [number]
-```
+## How can this be made accessible?
 
-if you POST to that endpoint, you will receive a monthly payment calculation in response that will look like this:
+Here are some of the initiatives to make the page accessible
 
-```
-monthlyPayment: [number]
-```
+- Implementing semantic HTML to help the screen reader and other user devices to determine the significance of the content
+- Aria label to help screen reader to determine the meaning for input action
 
-If there is an error, the response will look like this:
+## How would you display this on a mobile device?
 
-```
-error: [string]
-```
-
+The page is fully responsive on desktop, tablet, and phone screen sizes.
