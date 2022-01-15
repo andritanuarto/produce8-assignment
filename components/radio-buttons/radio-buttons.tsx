@@ -28,7 +28,7 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
 
   return (
     <FormControl component="fieldset">
-      <FormLabel component="legend">Gender</FormLabel>
+      <FormLabel component="legend">Period</FormLabel>
       <RadioGroup
         aria-label={ariaLabel}
         defaultValue={defaultValue}
