@@ -11,9 +11,9 @@ type InitialState = {
   interestRate: number,
   period: number,
   monthlyPayment: string,
-  loading: "idle" | "pending",
-  error: boolean,
-}
+  loading: boolean,
+  error: any,
+};
 
 export const getMonthlyPayment = createAsyncThunk(
   'users/getMonthlyPayment',
@@ -36,8 +36,8 @@ const initialState: InitialState = {
   interestRate: 2.5,
   period: 20,
   monthlyPayment: "",
-  loading: 'idle',
-  error: false,
+  loading: false,
+  error: null,
 };
 
 export const calculatorSlice = createSlice({
@@ -58,26 +58,26 @@ export const calculatorSlice = createSlice({
     builder
       .addCase(getMonthlyPayment.fulfilled, (state, action) => {
         if (action.payload.error) {
-          state.error = true;
+          state.error = action.payload.error;
           return;
         }
         if (
-          state.loading === 'pending' && action.payload.monthlyPayment
+          state.loading === true && action.payload.monthlyPayment
         ) {
           if (state.error) {
-            state.error = false;
+            state.error = null;
           }
-          state.loading = 'idle'
+          state.loading = false
           state.monthlyPayment = action.payload.monthlyPayment
         }
       })
       .addCase(getMonthlyPayment.pending, (state) => {
         if (state.error) {
-          state.error = false;
+          state.error = null;
         }
 
-        if (state.loading === 'idle') {
-          state.loading = 'pending'
+        if (state.loading === false) {
+          state.loading = true
         }
       })
   }

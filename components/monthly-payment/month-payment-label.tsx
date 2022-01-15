@@ -8,13 +8,12 @@ const MonthyPaymentLabel = () => {
   const calculatorStates = useAppSelector((state) => state.calculator);
   const { monthlyPayment, error, loading } = calculatorStates;
   const splitNumberForMonthlyPayment = monthlyPayment.toString().split(".");
-
   return (
     <>
       {
-        error ? (<span>Sorry can&apos;t calculate the mortgae, please try again</span>) : (
+        error ? (<span>{error}</span>) : (
           <>
-            {loading === 'pending' ? (
+            {loading ? (
               <Box sx={{ display: 'flex', flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <CircularProgress />
               </Box>
