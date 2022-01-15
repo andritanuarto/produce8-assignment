@@ -35,7 +35,7 @@ const initialState: InitialState = {
   interestRate: 2.5,
   period: 20,
   monthlyPayment: "",
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -60,13 +60,13 @@ export const calculatorSlice = createSlice({
           state.error = action.payload.error;
           return;
         }
-        if (
-          state.loading === true && action.payload.monthlyPayment
-        ) {
+        if (action.payload.monthlyPayment) {
           if (state.error) {
             state.error = null;
           }
-          state.loading = false
+          if (state.loading) {
+            state.loading = false
+          }
           state.monthlyPayment = action.payload.monthlyPayment
         }
       })
@@ -75,7 +75,7 @@ export const calculatorSlice = createSlice({
           state.error = null;
         }
 
-        if (state.loading === false) {
+        if (!state.loading ) {
           state.loading = true
         }
       })

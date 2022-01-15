@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useAppSelector } from '../../redux/hooks';
@@ -7,7 +7,7 @@ import { convertIntWithCommas } from '../../util';
 const MonthyPaymentLabel = () => {
   const calculatorStates = useAppSelector((state) => state.calculator);
   const { monthlyPayment, error, loading } = calculatorStates;
-  const splitNumberForMonthlyPayment = monthlyPayment.toString().split(".");
+  const splitNumberForMonthlyPayment = monthlyPayment.toString().split('.');
   return (
     <>
       {
@@ -30,7 +30,7 @@ const MonthyPaymentLabel = () => {
         )
       }
     </>
-  )
-}
+  );
+};
 
 export default memo(MonthyPaymentLabel);

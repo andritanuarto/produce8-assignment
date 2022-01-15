@@ -1,4 +1,5 @@
 
+import React from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,6 +13,7 @@ type RadioButton = {
 }
 
 type RadioButtonsProps = {
+  topLabel?: string;
   buttons: Array<RadioButton>;
   ariaLabel: string;
   defaultValue?: string | number | boolean;
@@ -20,6 +22,7 @@ type RadioButtonsProps = {
 }
 
 const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
+  topLabel,
   buttons,
   ariaLabel,
   defaultValue,
@@ -33,7 +36,7 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
 
   return (
     <FormControl component="fieldset">
-      <label className={styles["top-label"]}>Period</label>
+      {topLabel && <label className={styles['top-label']}>{topLabel}</label>}
       <RadioGroup
         aria-label={ariaLabel}
         value={defaultValue}
@@ -58,7 +61,7 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
                     }
                   }}/>
                 }
-                label={<span className={styles["radio-label"]}>{button.label}</span>}
+                label={<span className={styles['radio-label']}>{button.label}</span>}
               />
             );
           })
