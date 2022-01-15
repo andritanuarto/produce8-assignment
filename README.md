@@ -12,7 +12,8 @@ When the error happens, it will change the default error state to true.
 
 To test the error, try to change the interest rate to 0 or 0.5. It will show the error message below in the monthly payment section.
 \
-`There was a problem calculating your mortgage. Please check your inputs`
+\
+"`There was a problem calculating your mortgage. Please check your inputs`"
 
 ### What happens while waiting the error?
 
