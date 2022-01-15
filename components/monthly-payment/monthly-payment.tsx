@@ -7,7 +7,7 @@ const MonthyPayment = () => {
   return (
     <div className={styles["container"]}>
       <span>Your total monthly payment will be</span>
-      <strong>{monthlyPayment}</strong>
+      <strong><span>$</span>{monthlyPayment}</strong>
       <span>/month</span>
       <button>Apply Today</button>
     </div>

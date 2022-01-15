@@ -25,6 +25,14 @@
     flex-grow: 1;
     display: flex;
     align-items: center;
+    span {
+      position: relative;
+      top: -10px;
+      font-weight: bold;
+      font-size: 20px;
+      margin-right: 5px;
+      color: $dark-grey;
+    }
   }
   button {
     position: absolute;

@@ -36,11 +36,16 @@ const MainContent = (): JSX.Element => {
   }
 
   useEffect(() => {
-    dispatch(getMonthlyPayment({
+    // Dispatching the thunk returns a promise
+    const promise = dispatch(getMonthlyPayment({
       principal: purchasePrice,
       interest: interestRate,
       term: period
-    }))
+    }));
+  
+    return () => {
+      promise.abort()
+    }
   }, [purchasePrice, interestRate, period]);
 
   return (
@@ -55,7 +60,9 @@ const MainContent = (): JSX.Element => {
             <InputSlider
               value={purchasePrice}
               topLabel="Purchase Price"
-              valueLabel={<><span>$</span>{convertIntWithCommas(purchasePrice)}</>}
+              valueLabel={
+                <><span className={styles.unit}>$</span>{convertIntWithCommas(purchasePrice)}</>
+              }
               min={50000}
               max={2500000}
               step={10000}
@@ -68,7 +75,9 @@ const MainContent = (): JSX.Element => {
             <InputSlider
               value={interestRate}
               topLabel="Interest Rate"
-              valueLabel={<><span>%</span>{isFloatNumber(interestRate) ? interestRate : `${interestRate}.0`}</>}
+              valueLabel={
+                <><span className={styles.unit}>%</span>{isFloatNumber(interestRate) ? interestRate : `${interestRate}.0`}</>
+              }
               min={0}
               max={25}
               step={0.5}

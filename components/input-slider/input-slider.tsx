@@ -48,10 +48,10 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
         />
         <div className={styles["min-max-labels"]}>
           {(minLabel || maxLabel) && (
-            <div>
+            <>
               <span>{minLabel}</span>
               <span>{maxLabel}</span>
-            </div>
+            </>
           )}
         </div>
       </div>
