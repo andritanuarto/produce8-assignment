@@ -34,6 +34,9 @@ export const calculatorSlice = createSlice({
     },
     changeInterestRate: (state, action) => {
       state.interestRate = action.payload;
+    },
+    changePeriod: (state, action) => {
+      state.period = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -46,5 +49,5 @@ export const calculatorSlice = createSlice({
   }
 });
 
-export const { changePurchasePrice, changeInterestRate } = calculatorSlice.actions
+export const { changePurchasePrice, changeInterestRate, changePeriod } = calculatorSlice.actions
 export default calculatorSlice.reducer

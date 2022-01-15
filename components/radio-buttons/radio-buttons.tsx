@@ -17,22 +17,29 @@ type RadioButtonsProps = {
   ariaLabel: string;
   defaultValue?: string | number | boolean;
   radioGroupName: string;
+  onChange?: (newValue: string) => void;
 }
 
 const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
   buttons,
   ariaLabel,
   defaultValue,
-  radioGroupName
+  radioGroupName,
+  onChange
 }): JSX.Element => {
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange && onChange(event.target.value);
+  };
 
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Period</FormLabel>
       <RadioGroup
         aria-label={ariaLabel}
-        defaultValue={defaultValue}
+        value={defaultValue}
         name={radioGroupName}
+        onChange={handleChange}
       >
         {
           buttons.map(button => {

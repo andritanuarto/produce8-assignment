@@ -4,13 +4,14 @@ import InputSlider from '../input-slider/input-slider';
 import RadioButtons from '../radio-buttons/radio-buttons';
 import MonthlyPayment from '../monthly-payment/monthly-payment';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import { changePurchasePrice, changeInterestRate, getMonthlyPayment } from '../../redux/calculatorSlice';
+import { changePurchasePrice, changeInterestRate, changePeriod, getMonthlyPayment } from '../../redux/calculatorSlice';
 import { convertIntWithCommas, isFloatNumber } from '../../util';
 import styles from './MainContent.module.scss';
 
 enum CalculationValueType {
   PurchasePrice = 'PurchasePrice',
-  InterestRate = 'InterestRate'
+  InterestRate = 'InterestRate',
+  TermPeriod = 'TermPeriod'
 }
 
 const MainContent = (): JSX.Element => {
@@ -19,8 +20,7 @@ const MainContent = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const handleChange = (
-    event: Event,
-    newValue: number | number[],
+    newValue: number | number[] | string,
     calculationType: CalculationValueType
   ) => {
     switch(calculationType) {
@@ -30,6 +30,8 @@ const MainContent = (): JSX.Element => {
       case (CalculationValueType.InterestRate):
         dispatch(changeInterestRate(newValue));
         break;
+      case (CalculationValueType.TermPeriod):
+        dispatch(changePeriod(newValue));
     }
   }
 
@@ -57,7 +59,7 @@ const MainContent = (): JSX.Element => {
               min={50000}
               max={2500000}
               step={10000}
-              onChange={(event, newValue) => handleChange(event, newValue, CalculationValueType.PurchasePrice)}
+              onChange={(event, newValue) => handleChange(newValue, CalculationValueType.PurchasePrice)}
               minLabel="$50K"
               maxLabel="$2.5M"
             />
@@ -70,12 +72,13 @@ const MainContent = (): JSX.Element => {
               min={0}
               max={25}
               step={0.5}
-              onChange={(event, newValue) => handleChange(event, newValue, CalculationValueType.InterestRate)}
+              onChange={(event, newValue) => handleChange(newValue, CalculationValueType.InterestRate)}
               minLabel="0"
               maxLabel="25%"
             />
           </div>
           <RadioButtons 
+            onChange={(newValue) => handleChange(newValue, CalculationValueType.TermPeriod)}
             ariaLabel="period"
             defaultValue={period}
             radioGroupName="period-radio-buttons"
