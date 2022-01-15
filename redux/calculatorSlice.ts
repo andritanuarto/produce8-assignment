@@ -23,7 +23,8 @@ export const getMonthlyPayment = createAsyncThunk(
         headers: {
           'Content-Type': 'application/json'
         }
-    })
+    });
+    
     return response.json();
   }
 )

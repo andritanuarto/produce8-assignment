@@ -4,7 +4,7 @@ import styles from './MonthlyPayment.module.scss';
 
 const MonthyPayment = () => {
   const calculatorStates = useAppSelector((state) => state.calculator);
-  const { monthlyPayment, loading, error } = calculatorStates;
+  const { error } = calculatorStates;
 
   return (
     <div className={styles["container"]}>
