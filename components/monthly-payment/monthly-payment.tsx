@@ -9,7 +9,7 @@ const MonthyPayment = () => {
   return (
     <div className={styles["container"]}>
       {
-        error ? (<span>Sorry can't calculate the mortgae, please try again</span>) : (
+        error ? (<span>Sorry can&apos;t calculate the mortgae, please try again</span>) : (
           <>
             <span>Your total monthly payment will be</span>
             <MonthyPaymentLabel />

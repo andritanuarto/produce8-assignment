@@ -46,7 +46,7 @@ const MainContent = (): JSX.Element => {
     return () => {
       promise.abort();
     }
-  }, [purchasePrice, interestRate, period]);
+  }, [purchasePrice, interestRate, period, dispatch]);
 
   return (
     <main className={styles.container}>

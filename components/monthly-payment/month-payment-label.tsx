@@ -12,7 +12,7 @@ const MonthyPaymentLabel = () => {
   return (
     <>
       {
-        error ? (<span>Sorry can't calculate the mortgae, please try again</span>) : (
+        error ? (<span>Sorry can&apos;t calculate the mortgae, please try again</span>) : (
           <>
             {loading === 'pending' ? (
               <Box sx={{ display: 'flex', flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>

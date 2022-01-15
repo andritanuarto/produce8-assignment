@@ -1,5 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit'
 import calculatorReducer from './calculatorSlice';
 
 const store = configureStore({
