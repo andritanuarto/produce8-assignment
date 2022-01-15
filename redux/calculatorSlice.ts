@@ -18,13 +18,15 @@ type InitialState = {
 export const getMonthlyPayment = createAsyncThunk(
   'users/getMonthlyPayment',
   async (values:CalculationValues): Promise<{monthlyPayment?: string, error?: string}> => {
-    const response = await fetch(`/api/mortgageCalculation?principal=${values.principal}&annualInterestRate=${values.interest}&termOfLoan=${values.term}`, {
+    const url = `/api/mortgageCalculation?principal=${values.principal}&annualInterestRate=${values.interest}&termOfLoan=${values.term}`;
+
+    const response = await fetch(url, {
       method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         }
     });
-    
+
     return response.json();
   }
 )

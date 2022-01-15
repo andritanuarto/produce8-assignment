@@ -34,7 +34,7 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
 
   return (
     <FormControl component="fieldset">
-      <FormLabel component="legend">Period</FormLabel>
+      <FormLabel>Period</FormLabel>
       <RadioGroup
         aria-label={ariaLabel}
         value={defaultValue}
@@ -53,6 +53,10 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
                     '&.Mui-checked': {
                       color: purple[700],
                     },
+                    '& svg': {
+                      width: 30 ,
+                      height: 30  
+                    }
                   }}/>
                 }
                 label={<span className={styles["radio-label"]}>{button.label}</span>}

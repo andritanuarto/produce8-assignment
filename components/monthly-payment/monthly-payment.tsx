@@ -8,16 +8,10 @@ const MonthyPayment = () => {
 
   return (
     <div className={styles["container"]}>
-      {
-        error ? (<span>Sorry can&apos;t calculate the mortgae, please try again</span>) : (
-          <>
-            <span>Your total monthly payment will be</span>
-            <MonthyPaymentLabel />
-            <span>/month</span>
-            <button>Apply Today</button>
-          </>
-        )
-      }
+      {!error && <span>Your total monthly payment will be</span>}
+      <MonthyPaymentLabel />
+      {!error && <span>/month</span>}
+      <button>Apply Today</button>
     </div>
   )
 };
