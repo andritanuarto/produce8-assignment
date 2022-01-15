@@ -1,3 +1,11 @@
+@import '/styles/variables';
+
+.top-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: $light-grey;
+}
+
 .radio-label {
   font-size: 14px;
 }

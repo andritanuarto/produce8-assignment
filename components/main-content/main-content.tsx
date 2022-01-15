@@ -1,10 +1,53 @@
 
+import { useEffect, useCallback, memo } from 'react';
 import InputSlider from '../input-slider/input-slider';
 import RadioButtons from '../radio-buttons/radio-buttons';
 import MonthlyPayment from '../monthly-payment/monthly-payment';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { changePurchasePrice, changeInterestRate, changePeriod, getMonthlyPayment } from '../../redux/calculatorSlice';
+import { convertIntWithCommas, isFloatNumber } from '../../util';
 import styles from './MainContent.module.scss';
 
+enum CalculationValueType {
+  PurchasePrice = 'PurchasePrice',
+  InterestRate = 'InterestRate',
+  TermPeriod = 'TermPeriod'
+}
+
 const MainContent = (): JSX.Element => {
+  const calculatorStates = useAppSelector((state) => state.calculator);
+  const { purchasePrice, interestRate, period } = calculatorStates;
+  const dispatch = useAppDispatch();
+
+  const handleChange = useCallback((
+    newValue: number | number[] | string,
+    calculationType: CalculationValueType
+  ) => {
+    switch(calculationType) {
+      case (CalculationValueType.PurchasePrice):
+        dispatch(changePurchasePrice(newValue));
+        break;
+      case (CalculationValueType.InterestRate):
+        dispatch(changeInterestRate(newValue));
+        break;
+      case (CalculationValueType.TermPeriod):
+        dispatch(changePeriod(newValue));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    // Dispatching the thunk returns a promise
+    const promise = dispatch(getMonthlyPayment({
+      principal: purchasePrice,
+      interest: interestRate,
+      term: period
+    }));
+  
+    return () => {
+      promise.abort();
+    }
+  }, [purchasePrice, interestRate, period, dispatch]);
+
   return (
     <main className={styles.container}>
       <article className={styles.heading}>
@@ -15,33 +58,40 @@ const MainContent = (): JSX.Element => {
         <section>
           <div className={styles["input-slider-container"]}>
             <InputSlider
-              value={250000}
+              value={purchasePrice}
               topLabel="Purchase Price"
-              valueLabel="$50.000"
+              valueLabel={
+                <><span className={styles.unit}>$</span>{convertIntWithCommas(purchasePrice)}</>
+              }
               min={50000}
               max={2500000}
               step={10000}
-              onChange={() => {}}
+              ariaLabel="purchase price"
+              onChange={(event, newValue) => handleChange(newValue, CalculationValueType.PurchasePrice)}
               minLabel="$50K"
               maxLabel="$2.5M"
             />
           </div>
           <div className={styles["input-slider-container"]}>
             <InputSlider
-              value={1.5}
+              value={interestRate}
               topLabel="Interest Rate"
-              valueLabel="2.5%"
+              valueLabel={
+                <><span className={styles.unit}>%</span>{isFloatNumber(interestRate) ? interestRate : `${interestRate}.0`}</>
+              }
               min={0}
               max={25}
               step={0.5}
-              onChange={() => {}}
+              ariaLabel="interest rate"
+              onChange={(event, newValue) => handleChange(newValue, CalculationValueType.InterestRate)}
               minLabel="0"
               maxLabel="25%"
             />
           </div>
           <RadioButtons 
-            ariaLabel="period"
-            defaultValue={20}
+            onChange={(newValue) => handleChange(newValue, CalculationValueType.TermPeriod)}
+            ariaLabel="mortgage period"
+            defaultValue={period}
             radioGroupName="period-radio-buttons"
             buttons={[
               {
@@ -67,4 +117,4 @@ const MainContent = (): JSX.Element => {
   );
 };
 
-export default MainContent;
+export default memo(MainContent);

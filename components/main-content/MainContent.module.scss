@@ -34,7 +34,6 @@ $breaking-point: 768px;
   @media (max-width: $breaking-point) {
     flex-direction: column;
   }
-
   section {
     &:first-child {
       padding-right: 50px;
@@ -61,4 +60,11 @@ $breaking-point: 768px;
       }
     }
   }
+}
+
+.unit {
+  font-size: 15px;
+  position: relative;
+  top: -10px;
+  margin-right: 5px;
 }

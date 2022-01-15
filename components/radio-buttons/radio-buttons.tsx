@@ -3,7 +3,6 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import { purple, grey} from '@mui/material/colors';
 import styles from './RadioButtons.module.scss';
 
@@ -17,22 +16,29 @@ type RadioButtonsProps = {
   ariaLabel: string;
   defaultValue?: string | number | boolean;
   radioGroupName: string;
+  onChange?: (newValue: string) => void;
 }
 
 const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
   buttons,
   ariaLabel,
   defaultValue,
-  radioGroupName
+  radioGroupName,
+  onChange
 }): JSX.Element => {
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange && onChange(event.target.value);
+  };
 
   return (
     <FormControl component="fieldset">
-      <FormLabel component="legend">Gender</FormLabel>
+      <label className={styles["top-label"]}>Period</label>
       <RadioGroup
         aria-label={ariaLabel}
-        defaultValue={defaultValue}
+        value={defaultValue}
         name={radioGroupName}
+        onChange={handleChange}
       >
         {
           buttons.map(button => {
@@ -46,6 +52,10 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
                     '&.Mui-checked': {
                       color: purple[700],
                     },
+                    '& svg': {
+                      width: 30 ,
+                      height: 30  
+                    }
                   }}/>
                 }
                 label={<span className={styles["radio-label"]}>{button.label}</span>}
