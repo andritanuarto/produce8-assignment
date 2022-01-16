@@ -3,7 +3,7 @@
 `yarn dev` - to run development
 Open (http://localhost:3000) with your browser to see the page.
 
-### What happens if the server error?
+## What happens if the server error?
 
 The error is handled in `calculatorSlice.ts` in the extraReducers function.
 
@@ -13,12 +13,12 @@ To test the error, try to change the interest rate to 0 or 0.5. It will show the
 
 `There was a problem calculating your mortgage. Please check your inputs`
 
-### What happens while waiting the error?
+## What happens while waiting the error?
 
 The loading request is handled in `getMonthlyPayment.pending` and `getMonthlyPayment.fulfilled` in `calculatorSlice.ts`.
 by changing the loading state.
 
-### How can this be made accessible?
+## How can this be made accessible?
 
 Here are some of the initiatives to make the page accessible
 
@@ -31,6 +31,6 @@ Current design it doesn't pass the A or AA or AAA compliance.
 
 You can test it using contrast checker (https://webaim.org/resources/contrastchecker/)
 
-### How would you display this on a mobile device?
+## How would you display this on a mobile device?
 
 The page is fully responsive on desktop, tablet, and phone screen sizes.
