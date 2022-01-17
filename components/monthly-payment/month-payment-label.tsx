@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useAppSelector } from '../../redux/hooks';
@@ -21,7 +21,7 @@ const MonthyPaymentLabel = () => {
               <>
                 <strong>
                   <span>$</span>
-                  {convertIntWithCommas(splitNumberForMonthlyPayment[0])}
+                  <strong data-testid="monthlyPaymentNumber">{convertIntWithCommas(splitNumberForMonthlyPayment[0])}</strong>
                   <span>{splitNumberForMonthlyPayment[1]}</span>
                 </strong>
               </>
@@ -33,4 +33,4 @@ const MonthyPaymentLabel = () => {
   );
 };
 
-export default memo(MonthyPaymentLabel);
+export default MonthyPaymentLabel;

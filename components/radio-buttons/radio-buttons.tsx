@@ -10,6 +10,7 @@ import styles from './RadioButtons.module.scss';
 type RadioButton = {
   value: string | number;
   label: string | number;
+  dataTestId: string;
 }
 
 type RadioButtonsProps = {
@@ -27,7 +28,7 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
   ariaLabel,
   defaultValue,
   radioGroupName,
-  onChange
+  onChange,
 }): JSX.Element => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +43,7 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
         value={defaultValue}
         name={radioGroupName}
         onChange={handleChange}
+        
       >
         {
           buttons.map(button => {
@@ -49,17 +51,20 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
               <FormControlLabel
                 key={button.value}
                 value={button.value}
+                data-testid={button.dataTestId}
                 control={
-                  <Radio sx={{
-                    color: grey[700],
-                    '&.Mui-checked': {
-                      color: purple[700],
-                    },
-                    '& svg': {
-                      width: 30 ,
-                      height: 30  
-                    }
-                  }}/>
+                  <Radio
+                    sx={{
+                      color: grey[700],
+                      '&.Mui-checked': {
+                        color: purple[700],
+                      },
+                      '& svg': {
+                        width: 30 ,
+                        height: 30  
+                      }
+                    }}
+                  />
                 }
                 label={<span className={styles['radio-label']}>{button.label}</span>}
               />

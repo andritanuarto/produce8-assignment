@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-type CalculationValues = {
+export type CalculationValues = {
   principal: number,
   interest: number,
   term: number
