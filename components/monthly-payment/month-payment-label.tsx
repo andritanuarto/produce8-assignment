@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useAppSelector } from '../../redux/hooks';
@@ -33,4 +33,4 @@ const MonthyPaymentLabel = () => {
   );
 };
 
-export default MonthyPaymentLabel;
+export default memo(MonthyPaymentLabel);

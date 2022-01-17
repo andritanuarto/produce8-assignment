@@ -43,7 +43,6 @@ const RadioButtons: React.FunctionComponent<RadioButtonsProps> = ({
         value={defaultValue}
         name={radioGroupName}
         onChange={handleChange}
-        
       >
         {
           buttons.map(button => {

@@ -3,12 +3,13 @@
  */
 
 import { screen, render, fireEvent, prettyDOM, act } from "@testing-library/react";
-import {within} from '@testing-library/dom'
+import { waitFor } from '@testing-library/dom'
 import MainContent from '../main-content';
 import { Provider } from 'react-redux';
 import { configureStore, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { InitialStateType, CalculationValues } from '../../../redux/calculatorSlice';
+import { InitialStateType, CalculationValues, changePeriod } from '../../../redux/calculatorSlice';
 import { convertIntWithCommas } from "../../../util";
+import React from "react";
 
 const initialState: InitialStateType = {
   purchasePrice: 50000,
@@ -62,11 +63,7 @@ const calculatorSlice = createSlice({
     builder
       .addCase(getMonthlyPayment.fulfilled, (state, action) => {
         state.monthlyPayment = action.payload.monthlyPayment;
-        state.loading = false;
       })
-      .addCase(getMonthlyPayment.pending, (state) => {
-        state.loading = false;
-      });
   }
 });
 
@@ -77,14 +74,12 @@ const store = configureStore({
 });
 
 beforeEach(() => {
-  act(() => {
-    render(
-      <Provider store={store}>
-        <MainContent />
-      </Provider>
-    )
-  });
-})
+  render(
+    <Provider store={store}>
+      <MainContent />
+    </Provider>
+  )
+});
 
 describe('Main Content', () => {
   describe('should render without breaking', () => {
@@ -135,40 +130,32 @@ describe('Main Content', () => {
     });
 
     it('should check the correct period radio button', async () => {
-      const period = await screen.findByTestId('mortgagePeriodInput30');
-      const periodRadioButton = period.querySelector("input");
+      const thirtyPeriod = await screen.findByTestId('mortgagePeriodInput30');
+      const thirtyPeriodRadioButton = thirtyPeriod.querySelector("input");
 
-      fireEvent.change(periodRadioButton as HTMLInputElement, {target: {checked: true}});
+      const twentyPeriod = await screen.findByTestId('mortgagePeriodInput20');
+      const twentyFivePeriod = await screen.findByTestId('mortgagePeriodInput25');
 
-      expect(periodRadioButton).toBeChecked();
-    })
+
+      fireEvent.change(thirtyPeriodRadioButton as HTMLInputElement, {target: {checked: true}});
+
+      expect(thirtyPeriodRadioButton).toBeChecked();
+      expect(twentyPeriod.querySelector("input")).not.toBeChecked();
+      expect(twentyFivePeriod.querySelector("input")).not.toBeChecked();
+    });
     
     it('should show the correct monthly payment', async () => {
       const principal = 250000;
       const interest = 2.5;
       const term = 25;
   
-      const expectedMonthlyPayment = calculatePayment({ principal, interest, term });
+      const expectedMonthlyPayment = calculatePayment({ principal, interest, term }).toString().split('.');
   
-      const purchasePrice = await screen.findByTestId('purchasePriceInput');
-      const purchasePriceInput = purchasePrice.querySelector("input");
-  
-      const interestRate = await screen.findByTestId('interestRateInput');
-      const interestRateInput = interestRate.querySelector("input");
-  
-      const period = await screen.findByTestId(`mortgagePeriodInput25`);
-      const periodRadioButton = period.querySelector("input");
-  
-      await fireEvent.change(purchasePriceInput as HTMLInputElement, {target: {value: principal}});
-      await fireEvent.change(interestRateInput as HTMLInputElement, {target: {value: interest}});
-      await fireEvent.change(periodRadioButton as HTMLInputElement, {target: {checked: true}});
-      
-      const printedMonthPayment = await screen.getByTestId('monthlyPaymentNumber');
-      const monthlyPayment = await screen.findByText('1,059');
+      await store.dispatch(getMonthlyPayment({ principal, interest, term }))
 
-      expect(monthlyPayment).toBeInTheDocument();
-  
-      // console.log(expectedMonthlyPayment, 'expectedMonthlyPayment')
+      const printedMonthPayment = await screen.findByTestId('monthlyPaymentNumber');
+
+      expect(printedMonthPayment).toHaveTextContent(convertIntWithCommas(expectedMonthlyPayment[0]));
     });
   });
 
