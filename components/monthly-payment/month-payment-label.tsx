@@ -19,7 +19,7 @@ const MonthyPaymentLabel = () => {
               </Box>
             ) : (
               <>
-                <strong>
+                <strong data-testid="monthlyPaymentNumber">
                   <span>$</span>
                   {convertIntWithCommas(splitNumberForMonthlyPayment[0])}
                   <span>{splitNumberForMonthlyPayment[1]}</span>

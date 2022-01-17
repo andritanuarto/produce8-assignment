@@ -74,6 +74,7 @@ const MainContent = (): JSX.Element => {
               onChangeCommitted={handleMonthlyPayment}
               minLabel="$50K"
               maxLabel="$2.5M"
+              dataTestId="purchasePriceInput"
             />
           </div>
           <div className={styles['input-slider-container']}>
@@ -91,6 +92,7 @@ const MainContent = (): JSX.Element => {
               onChangeCommitted={handleMonthlyPayment}
               minLabel="0"
               maxLabel="25%"
+              dataTestId="interestRateInput"
             />
           </div>
           <RadioButtons 
@@ -100,9 +102,9 @@ const MainContent = (): JSX.Element => {
             radioGroupName="period-radio-buttons"
             topLabel="Period"
             buttons={[
-              { value: 20, label:  '20 Years' },
-              { value: 25, label:  '25 Years' },
-              { value: 30, label:  '30 Years' }
+              { value: 20, label: '20 Years', dataTestId: 'mortgagePeriodInput20' },
+              { value: 25, label: '25 Years', dataTestId: 'mortgagePeriodInput25' },
+              { value: 30, label: '30 Years', dataTestId: 'mortgagePeriodInput30' }
             ]}
           />
         </section>

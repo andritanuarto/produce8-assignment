@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-type CalculationValues = {
+export type CalculationValues = {
   principal: number,
   interest: number,
   term: number
 }
 
-type InitialState = {
+export type InitialStateType = {
   purchasePrice: number,
   interestRate: number,
   period: number,
@@ -19,6 +19,7 @@ export const getMonthlyPayment = createAsyncThunk(
   'users/getMonthlyPayment',
   async (values:CalculationValues): Promise<{monthlyPayment?: string, error?: string}> => {
     const url = `/api/mortgageCalculation?principal=${values.principal}&annualInterestRate=${values.interest}&termOfLoan=${values.term}`;
+    
     const response = await fetch(url, {
       method: 'POST',
         headers: {
@@ -30,7 +31,7 @@ export const getMonthlyPayment = createAsyncThunk(
   }
 );
 
-const initialState: InitialState = {
+const initialState: InitialStateType = {
   purchasePrice: 50000,
   interestRate: 2.5,
   period: 20,

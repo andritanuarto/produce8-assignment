@@ -34,3 +34,15 @@ You can test it using contrast checker (https://webaim.org/resources/contrastche
 ## How would you display this on a mobile device?
 
 The page is fully responsive on desktop, tablet, and phone screen sizes.
+
+## What kind of tests can you write for this UI?
+
+Run `yarn test` to run test
+
+I realized when about to finish the page this link https://github.com/Produce8/P8FrontendAssignment/files/7866197/CodeExercise.pdf has question about test but those links below are not:
+
+- https://github.com/Produce8/P8FrontendAssignment/blob/main/CodeExercise.pdf
+- https://github.com/Produce8/P8FrontendAssignment/blob/main/CodeExercise.png
+
+Because of a limited time I only write the most complext component which is in `mainContent.test.tsx`
+and also `calculatorSlice.test.ts`.

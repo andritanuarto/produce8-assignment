@@ -14,6 +14,7 @@ type SliderProps = {
   maxLabel?: string | number;
   step: number;
   ariaLabel?: string;
+  dataTestId?: string;
   onChange: (event: Event, newValue: InputValue) => void;
   onChangeCommitted: (event: Event | React.SyntheticEvent<Element, Event>, newValue: InputValue) => void;
 }
@@ -27,14 +28,19 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
   minLabel,
   maxLabel,
   step = 1,
-  ariaLabel,
+  ariaLabel = "",
+  dataTestId = "",
   onChange,
   onChangeCommitted
 }): JSX.Element => {
   return (
     <div>
       {topLabel && (<label className={styles['top-label']}>{topLabel}</label>)}
-      {valueLabel && (<div className={styles['value-label']}>{valueLabel}</div>)}
+      {valueLabel && (
+        <div data-testid={topLabel?.toLocaleLowerCase().replace(/\s/g, "")} className={styles['value-label']}>
+          {valueLabel}
+        </div>
+      )}
       <Slider
         value={value}
         onChange={onChange}
@@ -50,6 +56,7 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
             border: 'solid 2px #3577da'
           }
         }}
+        data-testid={dataTestId}
       />
       <div className={styles['min-max-labels']}>
         {(minLabel || maxLabel) && (
