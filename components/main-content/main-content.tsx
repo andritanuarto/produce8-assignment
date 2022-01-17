@@ -35,18 +35,21 @@ const MainContent = (): JSX.Element => {
     }
   }, [dispatch]);
 
-  useEffect(() => {
-    // Dispatching the thunk returns a promise
-    const promise = dispatch(getMonthlyPayment({
+  const handleMonthlyPayment = useCallback(() => {
+    dispatch(getMonthlyPayment({
       principal: purchasePrice,
       interest: interestRate,
       term: period
     }));
-  
-    return () => {
-      promise.abort();
-    };
-  }, [purchasePrice, interestRate, period, dispatch]);
+  }, [purchasePrice, interestRate, period]);
+
+  useEffect(() => {
+    /* 
+      Because radio button doesn't have onChangeCommitted handler so it 
+      needs to track the period state change to recalculate monthlyPayment
+    */
+    handleMonthlyPayment();
+  }, [period]);
 
   return (
     <main className={styles.container}>
@@ -68,6 +71,7 @@ const MainContent = (): JSX.Element => {
               step={10000}
               ariaLabel="purchase price"
               onChange={(event, newValue) => handleChange(newValue, CalculationValueType.PurchasePrice)}
+              onChangeCommitted={handleMonthlyPayment}
               minLabel="$50K"
               maxLabel="$2.5M"
             />
@@ -84,6 +88,7 @@ const MainContent = (): JSX.Element => {
               step={0.5}
               ariaLabel="interest rate"
               onChange={(event, newValue) => handleChange(newValue, CalculationValueType.InterestRate)}
+              onChangeCommitted={handleMonthlyPayment}
               minLabel="0"
               maxLabel="25%"
             />
@@ -95,18 +100,9 @@ const MainContent = (): JSX.Element => {
             radioGroupName="period-radio-buttons"
             topLabel="Period"
             buttons={[
-              {
-                value: 20,
-                label:  '20 Years'
-              },
-              {
-                value: 25,
-                label:  '25 Years'
-              },
-              {
-                value: 30,
-                label:  '30 Years'
-              }
+              { value: 20, label:  '20 Years' },
+              { value: 25, label:  '25 Years' },
+              { value: 30, label:  '30 Years' }
             ]}
           />
         </section>

@@ -57,6 +57,9 @@ export const calculatorSlice = createSlice({
     builder
       .addCase(getMonthlyPayment.fulfilled, (state, action) => {
         if (action.payload.error) {
+          // this looks like a direct mutation but it's not in the background
+          //  Redux Toolkit detects changes "draft state" and create new
+          //  immutable state base on those changes
           state.error = action.payload.error as {error?: string};
           return;
         }

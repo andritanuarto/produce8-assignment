@@ -1,6 +1,8 @@
-import React, { ReactNode, memo } from 'react';
+import React, { ReactNode, memo, useState } from 'react';
 import { Slider } from '@mui/material';
 import styles from './InputSlider.module.scss';
+
+type InputValue = number | number[];
 
 type SliderProps = {
   value: number;
@@ -12,7 +14,8 @@ type SliderProps = {
   maxLabel?: string | number;
   step: number;
   ariaLabel?: string;
-  onChange: (event: Event, newValue: number | number[]) => void;
+  onChange: (event: Event, newValue: InputValue) => void;
+  onChangeCommitted: (event: Event | React.SyntheticEvent<Element, Event>, newValue: InputValue) => void;
 }
 
 const InputSlider: React.FunctionComponent<SliderProps> = ({
@@ -24,8 +27,9 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
   minLabel,
   maxLabel,
   step = 1,
+  ariaLabel,
   onChange,
-  ariaLabel
+  onChangeCommitted
 }): JSX.Element => {
   return (
     <div>
@@ -34,6 +38,7 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
       <Slider
         value={value}
         onChange={onChange}
+        onChangeCommitted={onChangeCommitted}
         min={min}
         max={max}
         step={step}
