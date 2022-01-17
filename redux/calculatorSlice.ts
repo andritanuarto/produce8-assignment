@@ -19,6 +19,7 @@ export const getMonthlyPayment = createAsyncThunk(
   'users/getMonthlyPayment',
   async (values:CalculationValues): Promise<{monthlyPayment?: string, error?: string}> => {
     const url = `/api/mortgageCalculation?principal=${values.principal}&annualInterestRate=${values.interest}&termOfLoan=${values.term}`;
+    
     const response = await fetch(url, {
       method: 'POST',
         headers: {
