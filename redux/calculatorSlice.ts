@@ -6,7 +6,7 @@ type CalculationValues = {
   term: number
 }
 
-type InitialState = {
+export type InitialStateType = {
   purchasePrice: number,
   interestRate: number,
   period: number,
@@ -30,7 +30,7 @@ export const getMonthlyPayment = createAsyncThunk(
   }
 );
 
-const initialState: InitialState = {
+const initialState: InitialStateType = {
   purchasePrice: 50000,
   interestRate: 2.5,
   period: 20,

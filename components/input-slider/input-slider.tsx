@@ -34,7 +34,11 @@ const InputSlider: React.FunctionComponent<SliderProps> = ({
   return (
     <div>
       {topLabel && (<label className={styles['top-label']}>{topLabel}</label>)}
-      {valueLabel && (<div className={styles['value-label']}>{valueLabel}</div>)}
+      {valueLabel && (
+        <div data-testid={topLabel?.toLocaleLowerCase().replace(/\s/g, "")} className={styles['value-label']}>
+          {valueLabel}
+        </div>
+      )}
       <Slider
         value={value}
         onChange={onChange}
