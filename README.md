@@ -26,7 +26,7 @@ Here are some of the initiatives to make the page accessible
 - Aria label to help screen reader to determine the meaning for input action
 - Implementing next/header to put meta and title page
 
-Another recommendation is to make the text has more contrast with the background as possible.
+Another recommendation is to make the light color text has more contrast with the background as possible.
 Current design it doesn't pass the A or AA or AAA compliance.
 
 You can test it using contrast checker (https://webaim.org/resources/contrastchecker/)
